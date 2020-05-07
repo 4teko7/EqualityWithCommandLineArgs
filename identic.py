@@ -79,17 +79,17 @@ def fileSizesInsideDir(dir):
             filePathAndFileContentHash[filePath] = getHashValue(filePath,True)
             filePathAndFileNameHash[filePath] = getHashValue(os.path.basename(filePath),False)
             allContentHashes.append(filePathAndFileContentHash.get(filePath))
-            # allNameHashes.append(filePathAndFileNameHash.get(filePath))
+            allNameHashes.append(filePathAndFileNameHash.get(filePath))
         else:
             if(not dirPathAndDirContentHash.get(filePath) == None):
                 allContentHashes.append(dirPathAndDirContentHash.get(filePath))
-                # allNameHashes.append(dirPathAndDirNameHash.get(filePath))
+                allNameHashes.append(dirPathAndDirNameHash.get(filePath))
 
     allContentHashes.sort()
     allNameHashes.sort()
 
-    # allNameHashes.insert(0, getHashValue(dirName, False))
-    dirPathAndDirNameHash[dir] = getHashValue(dirName, False)
+    allNameHashes.insert(0, getHashValue(dirName, False))
+    dirPathAndDirNameHash[dir] = getHashValue(allNameHashes, False)
     dirPathAndDirContentHash[dir] = getHashValue(allContentHashes,False)
     # print(dirPathAndDirContentHash[dir])
 
