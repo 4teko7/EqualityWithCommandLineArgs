@@ -39,7 +39,7 @@ if(lookNames and lookContents):
     lookContents = False
     lookContentsAndNames = True
 
-if(lookNames and not lookContents and not lookContentsAndNames):
+if(lookNames or lookContentsAndNames):
     lookSizes = False
 
 if(not lookNames and not lookContentsAndNames):
@@ -190,19 +190,18 @@ def addSizeOfEntries(tempDict):
     return sizedDictionary
 
 def writeResult(**kargs):
-    with open('sameContentsAndNames.txt','w') as myFile:
-        if(lookDirs and lookContents):
-            myFile.write("SAME DIR CONTENT : \n*********************************************************************************************************************************************************************************************\n{}".format(kargs.get("stringOfSameDirContent")))
-        if(lookDirs and lookNames):
-            myFile.write("SAME DIR NAME : \n*********************************************************************************************************************************************************************************************\n{}".format(kargs.get("stringOfSameDirName")))
-        if(not lookDirs and lookNames):
-            myFile.write("SAME FILE NAME : \n*********************************************************************************************************************************************************************************************\n{}".format(kargs.get("stringOfSameFileName")))
-        if(not lookDirs and lookContents):
-            myFile.write("SAME FILE CONTENT : \n*********************************************************************************************************************************************************************************************\n{}".format(kargs.get("stringOfSameFileContent")))
-        if(lookDirs and lookContentsAndNames):
-            myFile.write("SAME DIR CONTENT AND NAME : \n*********************************************************************************************************************************************************************************************\n{}".format(kargs.get("stringOfSameNameAndContent")))
-        if(not lookDirs and lookContentsAndNames):
-            myFile.write("SAME FILE CONTENT AND NAME : \n*********************************************************************************************************************************************************************************************\n{}".format(kargs.get("stringOfSameNameAndContent")))
+    if(lookDirs and lookContents):
+        print("Same Dir Content\n\n",kargs.get("stringOfSameDirContent"),sep="")
+    if(lookDirs and lookNames):
+        print("Same Dir Name\n\n",kargs.get("stringOfSameDirName"),sep="")
+    if(not lookDirs and lookNames):
+        print("Same File Name\n\n",kargs.get("stringOfSameFileName"),sep="")
+    if(not lookDirs and lookContents):
+        print("Same File Content\n\n",kargs.get("stringOfSameFileContent"),sep="")
+    if(lookDirs and lookContentsAndNames):
+        print("Same Name And Content For Dirs\n\n",kargs.get("stringOfSameNameAndContent"),sep="")
+    if(not lookDirs and lookContentsAndNames):
+        print("Same Name And Content For Files\n\n",kargs.get("stringOfSameNameAndContent"),sep="")
 
 
 def LastStep():
