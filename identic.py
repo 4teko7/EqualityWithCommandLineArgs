@@ -75,7 +75,7 @@ def getHashValue(file,isFile):
         if(not type(file) == list):
             hashValue.update(file.encode("utf-8"))
         else:
-            for i in file[::-1]:
+            for i in file:
                 hashValue.update(i.encode("utf-8"))
 
     return hashValue.hexdigest()
