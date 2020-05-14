@@ -127,9 +127,30 @@ def findAllSameValuesOfDictionary(myDict):
 
     for key , value in tempSameValues.items():
         if(len(value) > 1):
+            value.sort()
             sameValues[key] = value
+            
 
-    return sameValues
+    allSortedDictValues = sameValues
+    if(not lookSizes):
+        allSortedDictValues = collections.OrderedDict(sorted(sameValues.items(), key=lambda x: x[1]))
+
+
+    return allSortedDictValues
+
+
+
+"""
+/home/teko/Desktop/projeDeneme/b        0
+/home/teko/Desktop/projeDeneme/c        0
+/home/teko/Desktop/projeDeneme/d        0
+/home/teko/Desktop/projeDeneme/e/a      0
+/home/teko/Desktop/projeDeneme/f/b      0
+/home/teko/Desktop/projeDeneme/g/a      0
+
+
+"""
+
 
 
 
@@ -138,7 +159,7 @@ def returnStringFromDictOfSameValues(dict1):
     if(lookSizes and not lookNames):
         for key, value in dict1.items():
             for v in value:
-                string += str(key) + " " + os.path.realpath(v) + "\n"
+                string += os.path.realpath(v) + "\t" + str(key) + "\n"
             string += "\n"
     else:
         for value in dict1.values():
