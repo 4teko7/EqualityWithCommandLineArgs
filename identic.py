@@ -192,11 +192,16 @@ def returnSameNamesWithSameContents(dictWithList):
     for valueList in sameContentAndNameLastOne.values():
         for values in valueList:
             if(len(values) > 1):
+                values.sort()
                 sameValues[count] = values
                 count += 1
 
+    allSortedDictValues = sameValues
+    if(not lookSizes):
+        allSortedDictValues = collections.OrderedDict(sorted(sameValues.items(), key=lambda x: x[1]))
 
-    return sameValues
+
+    return allSortedDictValues
     
 
 def addSizeOfEntries(tempDict):
