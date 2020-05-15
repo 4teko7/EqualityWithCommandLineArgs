@@ -140,26 +140,12 @@ def findAllSameValuesOfDictionary(myDict):
 
 
 
-"""
-/home/teko/Desktop/projeDeneme/b        0
-/home/teko/Desktop/projeDeneme/c        0
-/home/teko/Desktop/projeDeneme/d        0
-/home/teko/Desktop/projeDeneme/e/a      0
-/home/teko/Desktop/projeDeneme/f/b      0
-/home/teko/Desktop/projeDeneme/g/a      0
-
-
-"""
-
-
-
-
 def returnStringFromDictOfSameValues(dict1):
     string = str()
     if(lookSizes and not lookNames):
         for key, value in dict1.items():
             for v in value:
-                string += os.path.realpath(v) + "\t" + str(key) + "\n"
+                string += os.path.realpath(v) + "\t" + key.split(" ",1)[0] + "\n"
             string += "\n"
     else:
         for value in dict1.values():
@@ -204,14 +190,16 @@ def returnSameNamesWithSameContents(dictWithList):
     return allSortedDictValues
     
 
+
+# Burada Hata var ayni size lari siliyor. guzelce append et.
 def addSizeOfEntries(tempDict):
     sizedDict = dict()
 
-    for value in tempDict.values():
+    for key,value in tempDict.items():
         if(len(value) > 0):
-            sizedDict[fileAndDirPathAndSize.get(value[0])] = value
-
-    sizedDictionary = collections.OrderedDict(sorted(sizedDict.items(),reverse=True))
+            sizedDict[str(fileAndDirPathAndSize.get(value[0]))+ " " + key] = value
+            
+    sizedDictionary = collections.OrderedDict(sorted(sizedDict.items(),key=lambda x: int(x[0].split(" ",1)[0]), reverse=True))
 
     return sizedDictionary
 
