@@ -29,6 +29,9 @@ dirList = args.get('***') if args.get('***') else ['.']
 if(not lookFiles and not lookDirs):
     lookFiles = True
 
+if(lookNames):
+    lookSizes = False
+
 if(lookContentsAndNames):
     lookNames = False
     lookContents = False
@@ -39,8 +42,7 @@ if(lookNames and lookContents):
     lookContents = False
     lookContentsAndNames = True
 
-if(lookNames or lookContentsAndNames):
-    lookSizes = False
+
 
 if(not lookNames and not lookContentsAndNames):
     lookContents = True
@@ -197,12 +199,12 @@ def addSizeOfEntries(tempDict):
 
     for key,value in tempDict.items():
         if(len(value) > 0):
-            sizedDict[str(fileAndDirPathAndSize.get(value[0]))+ " " + key] = value
+            sizedDict[str(fileAndDirPathAndSize.get(value[0]))+ " " + value[0]] = value
             
     sizedDictionary = collections.OrderedDict(sorted(sizedDict.items(),key=lambda x: int(x[0].split(" ",1)[0]), reverse=True))
 
     return sizedDictionary
-
+# '/home/teko/Desktop/path', '-s','-cn','-d'
 def writeResult(**kargs):
     if(lookDirs and lookContents):
         print("Same Dir Content\n\n",kargs.get("stringOfSameDirContent"),sep="")
