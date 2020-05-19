@@ -200,24 +200,27 @@ def addSizeOfEntries(tempDict):
     for key,value in tempDict.items():
         if(len(value) > 0):
             sizedDict[str(fileAndDirPathAndSize.get(value[0]))+ " " + value[0]] = value
-            
-    sizedDictionary = collections.OrderedDict(sorted(sizedDict.items(),key=lambda x: int(x[0].split(" ",1)[0]), reverse=True))
+
+
+    sizedDictionary = collections.OrderedDict(sorted(sizedDict.items(),key=lambda x: x[0].split(" ",1)[1], reverse=False))        
+    sizedDictionary = collections.OrderedDict(sorted(sizedDictionary.items(),key=lambda x: int(x[0].split(" ",1)[0]), reverse=True))
+
 
     return sizedDictionary
 # '/home/teko/Desktop/path', '-s','-cn','-d'
 def writeResult(**kargs):
     if(lookDirs and lookContents):
-        print("Same Dir Content\n\n",kargs.get("stringOfSameDirContent"),sep="")
+        print(kargs.get("stringOfSameDirContent"))
     if(lookDirs and lookNames):
-        print("Same Dir Name\n\n",kargs.get("stringOfSameDirName"),sep="")
+        print(kargs.get("stringOfSameDirName"))
     if(not lookDirs and lookNames):
-        print("Same File Name\n\n",kargs.get("stringOfSameFileName"),sep="")
+        print(kargs.get("stringOfSameFileName"))
     if(not lookDirs and lookContents):
-        print("Same File Content\n\n",kargs.get("stringOfSameFileContent"),sep="")
+        print(kargs.get("stringOfSameFileContent"))
     if(lookDirs and lookContentsAndNames):
-        print("Same Name And Content For Dirs\n\n",kargs.get("stringOfSameNameAndContent"),sep="")
+        print(kargs.get("stringOfSameNameAndContent"))
     if(not lookDirs and lookContentsAndNames):
-        print("Same Name And Content For Files\n\n",kargs.get("stringOfSameNameAndContent"),sep="")
+        print(kargs.get("stringOfSameNameAndContent"))
 
 
 def LastStep():
@@ -280,30 +283,3 @@ for dir in allDirs[::-1]:
 
 LastStep()
 
-# getAllHashValuesFromDict()
-
-
-
-# print("filePathAndFileSize", filePathAndFileSize)
-
-
-    # if(lookContents and lookDirs):
-    #     sameDirContent = findAllSameValuesOfDictionary(dirPathAndDirContentHash)
-    #     if(lookSizes and not lookNames):
-    #        sizedSameDirContent = addSizeOfEntries(sameDirContent)
-    # if(lookNames and lookDirs):
-    #     sameDirName = findAllSameValuesOfDictionary(dirPathAndDirNameHash)
-    # if(lookNames and not lookDirs):
-    #     sameFileName = findAllSameValuesOfDictionary(filePathAndFileNameHash)
-    # if(lookContents and not lookDirs):
-    #     sameFileContent = findAllSameValuesOfDictionary(filePathAndFileContentHash)
-    #     if(lookSizes and not lookNames):
-    #        sizedSameFileContent = addSizeOfEntries(sameFileContent)
-    # if(lookContentsAndNames and lookDirs):
-    #    sameNameAndContent =  returnSameNamesWithSameContents(sameDirContent)
-    #    if(lookSizes and not lookNames):
-    #        sizedSameNameAndContent = addSizeOfEntries(sameNameAndContent)
-    # if(lookContentsAndNames and not lookDirs):
-    #     sameNameAndContent =  returnSameNamesWithSameContents(sameFileContent)
-    #     if(lookSizes and not lookNames):
-    #        sizedSameNameAndContent = addSizeOfEntries(sameNameAndContent)
