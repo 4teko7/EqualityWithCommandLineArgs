@@ -16,6 +16,7 @@ parser.add_argument("***",nargs = "*")
 args = vars(parser.parse_args())
 # print(args)
 
+#These values will be true if valid parameters are given
 lookFiles = args.get('f')
 lookDirs = args.get('d')
 lookContents = args.get('c')
@@ -25,31 +26,34 @@ lookSizes = args.get('s') and not lookNames
 dirList = args.get('***') if args.get('***') else ['.']
 
 
-
+#Look if -d and -f are not given, then -f will be default
 if(not lookFiles and not lookDirs):
     lookFiles = True
 
+#If there is -n option, set -s False
 if(lookNames):
     lookSizes = False
 
+#If -cn is given, then -n and -c are set to false
 if(lookContentsAndNames):
     lookNames = False
     lookContents = False
     lookContentsAndNames = True
 
+# if -c and -n are given, then they are set to false and -cn is set to true
 if(lookNames and lookContents):
     lookNames = False
     lookContents = False
     lookContentsAndNames = True
 
 
-
+# if -n and -cn are false, then -c is default and it is true
 if(not lookNames and not lookContentsAndNames):
     lookContents = True
 
 
 
-
+# Some dicts for hash valu pairs
 fileAndDirPathAndSize = dict()
 filePathAndFileContentHash = dict()
 filePathAndFileNameHash = dict()
@@ -58,7 +62,7 @@ dirPathAndDirNameHash = dict()
 
 
 
-
+# Returns all paths recursively according to parameter given
 def getAllDirs():
     allDirs = list()
     for dir in dirList:
@@ -66,6 +70,7 @@ def getAllDirs():
             allDirs.append(root)
     return allDirs
 
+#Return hash value of file, dir, string etc.
 def getHashValue(file,isFile):
     hashValue = hashlib.sha256()
     if isFile:
@@ -82,6 +87,7 @@ def getHashValue(file,isFile):
 
     return hashValue.hexdigest()
 
+# Will give us all hash value and path pairs, also sizes of them
 def fileSizesInsideDir(dir):
     global fileAndDirPathAndSize,filePathAndFileContentHash,filePathAndFileNameHash,dirPathAndDirContentHash,dirPathAndDirNameHash
     files = os.listdir(dir)
@@ -117,6 +123,7 @@ def fileSizesInsideDir(dir):
     dirPathAndDirContentHash[dir] = getHashValue(allContentHashes,False)
 
 
+#Will give us only same values according to parameter. if -n is given then, it will return only values which are larger than 1, which means there are more than one path which have the same name.
 def findAllSameValuesOfDictionary(myDict):
     tempSameValues = dict()
     sameValues = dict()
@@ -141,7 +148,7 @@ def findAllSameValuesOfDictionary(myDict):
     return allSortedDictValues
 
 
-
+# This converts dict pairs to string.
 def returnStringFromDictOfSameValues(dict1):
     string = str()
     if(lookSizes and not lookNames):
@@ -156,7 +163,7 @@ def returnStringFromDictOfSameValues(dict1):
             string += "\n"
     return string
 
-
+#This method for -cn option. It will take -c dict, and process it according to -cn option. (Takes same content and converts same name and content)
 def returnSameNamesWithSameContents(dictWithList):
     pathHashDict = dict()
     if(lookDirs):
@@ -193,7 +200,7 @@ def returnSameNamesWithSameContents(dictWithList):
     
 
 
-# Burada Hata var ayni size lari siliyor. guzelce append et.
+# Appends sizes of all entities to the dictionary
 def addSizeOfEntries(tempDict):
     sizedDict = dict()
 
@@ -208,6 +215,7 @@ def addSizeOfEntries(tempDict):
 
     return sizedDictionary
 # '/home/teko/Desktop/path', '-s','-cn','-d'
+#Write the result to the console
 def writeResult(**kargs):
     if(lookDirs and lookContents):
         print(kargs.get("stringOfSameDirContent"))
@@ -222,7 +230,7 @@ def writeResult(**kargs):
     if(not lookDirs and lookContentsAndNames):
         print(kargs.get("stringOfSameNameAndContent"))
 
-
+#According to the parameters, this method will call necessary methods.
 def LastStep():
     sameDirContent = dict()
     sameDirName = dict()
@@ -278,6 +286,8 @@ def LastStep():
     
 
 allDirs = getAllDirs()
+
+#This will send every path to the fileSizesInsideDir method for finding all pairs of hash and paths also sizes.
 for dir in allDirs[::-1]:
     fileSizesInsideDir(dir)
 
