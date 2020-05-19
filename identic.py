@@ -1,3 +1,8 @@
+"""
+Bilal Tekin
+2017400264
+"""
+
 import argparse
 import os
 import hashlib
