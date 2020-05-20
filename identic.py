@@ -72,7 +72,7 @@ def getAllDirs():
     allDirs = list()
     for dir in dirList:
         for root, dirs, files in os.walk(dir, topdown=True):
-            allDirs.append(root)
+            allDirs.append(os.path.realpath(root))
     return allDirs
 
 #Return hash value of file, dir, string etc.
@@ -287,10 +287,11 @@ def LastStep():
         stringOfSameNameAndContent = returnStringFromDictOfSameValues(sameNameAndContent)
         writeResult(stringOfSameDirContent = stringOfSameDirContent,stringOfSameFileContent = stringOfSameFileContent,stringOfSameNameAndContent = stringOfSameNameAndContent,stringOfSameDirName = stringOfSameDirName,stringOfSameFileName = stringOfSameFileName)
 
-    
-    
 
-allDirs = getAllDirs()
+
+allDirs = list(dict.fromkeys(getAllDirs()))
+# allDirsSet = set(allDirsLst)
+# allDirs = list(allDirsSet)
 
 #This will send every path to the fileSizesInsideDir method for finding all pairs of hash and paths also sizes.
 for dir in allDirs[::-1]:
